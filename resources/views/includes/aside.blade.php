@@ -25,6 +25,8 @@
                 </a>
             </div>
         </div>
+        
+        
 
         <!-- Sidebar Menu -->
         <nav class="mt-2">
@@ -38,6 +40,15 @@ with font-awesome or any other icon font library -->
                         <p>
                             Simple Link
                             <span class="right badge badge-danger">New</span>
+                        </p>
+                    </a>
+                </li>
+                
+                 <li class="nav-item">
+                    <a href="{{route('users.index')}}" class="nav-link">
+                        <i class="nav-icon fa fa-th"></i>
+                        <p>
+                            Usuarios y Roles
                         </p>
                     </a>
                 </li>
