@@ -41,6 +41,14 @@ with font-awesome or any other icon font library -->
                         </p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{route('users.index')}}" class="nav-link">
+                        <i class="nav-icon fa fa-th"></i>
+                        <p>
+                            Usuarios
+                        </p>
+                    </a>
+                </li>
                 
                 @foreach ($menus as $key => $item)
                     @if ($item['parent'] != 0)

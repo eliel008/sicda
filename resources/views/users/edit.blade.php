@@ -47,7 +47,7 @@
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Email:</strong>
-                    <textarea class="form-control" style="height:150px" name="correo" placeholder="Correo">{{ $user->correo }}</textarea>
+                    {!! Form::email('email',$user->email,['class' => 'form-control'])!!}
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12 text-center">
