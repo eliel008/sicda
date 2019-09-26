@@ -10,96 +10,54 @@
 @section('title', 'Guia')
 @section('cabecera')
 
-<div class="col-sm-6">
-    <h1 class="m-0 text-dark">Título Inicial</h1>
-</div><!-- /.col -->
-<div class="col-sm-6">
-    <ol class="breadcrumb float-sm-right">
-        <li class="breadcrumb-item"><a href="/home">Home</a></li>
-        <li class="breadcrumb-item active">localidad</li>
-    </ol>
-</div>
-
-
-<div class="col-lg-12">
-    @if (count($errors) > 0)
-    <div id="notificationError" class="alert alert-danger">
-        <strong>Ocurrió un problema con tus datos de entrada</strong><br>
-        <ul>
-            @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-    @endif
-    @if(Session::has('message.nivel'))
-
-    <div class="alert alert-{{ session('message.nivel') }} alert-dismissible" role="alert">
-        <div class="m-alert__icon">
-            <i class="fa fa-{{ session('message.icon') }}"></i>
-        </div>
-        <div class="m-alert__text">
-            <strong>
-                {{ session('message.title') }}
-            </strong>
-            {{ session('message.content') }}
-        </div>
-        <div class="m-alert__close">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-        </div>
-    </div>
-    @endif
-</div>
-@endsection
 @section('content')
-<div class="row">
-    <div class="col-lg-12">
-        <div class="card card-default color-palette-box">
-
-            <div class="card-header">
-                <h3 class="card-title">
-                    <i class="fa fa-tag"></i>
-                    <!-- Title -->
-                </h3>
+    <div class="row">
+        <div class="col-lg-12 margin-tb">
+            <div class="pull-left">
+                <h2></h2>
             </div>
-
-            <div class="card-body">
-                <!-- Body -->
-                <table class="table table-bordered">
-                    <tr>
-                        <th style="width: 10px">id</th>
-                        <th>nombre</th>
-                        <th>Progress</th>
-                        <th style="width: 40px">Label</th>
-                        <th style="width: 40px">Label</th>
-                    </tr>
-                    @foreach($users as $user)
-                    <tr>
-                        <td></td>
-                        <td>{{$user->name}}</td>
-
-                        <td>
-                            <div class="progress progress-xs">
-
-                            </div>
-                        </td>
-                        <td><span class="badge bg-danger">5%</span></td>
-                        <td><span class="badge bg-danger">5%</span></td>
-                    </tr>
-                    @endforeach
-                </table>
-                <div>
-                    <br>
-                    {{ $users->links() }}
-                </div>
+            <div class="pull-right">
+                <a class="btn btn-success" href="{{ route('users.create') }}"> Crea un nuevo usuario</a>
             </div>
         </div>
     </div>
-</div>
-@section('js-inferior')
-@parent
-<!-- Slimscroll -->
-<script src="../../plugins/slimScroll/jquery.slimscroll.min.js"></script>
-
+   
+    @if ($message = Session::get('success'))
+        <div class="alert alert-success">
+            <p>{{ $message }}</p>
+        </div>
+    @endif
+   
+    <table class="table table-bordered">
+        <tr>
+            <th>No</th>
+            <th>Name</th>
+            <th>Details</th>
+            <th width="280px">Action</th>
+        </tr>
+        @foreach ($users as $user)
+        <tr>
+            <td>{{ ++$i }}</td>
+            <td>{{ $user->name }}</td>
+            <td>{{ $user->email }}</td>
+            <td>{{ $user->password }}</td>
+            <td>
+                <form action="{{ route('users.destroy',$user->id) }}" method="POST">
+   
+                    <a class="btn btn-info" href="{{ route('users.show',$user->id) }}">Mostrar</a>
+    
+                    <a class="btn btn-primary" href="{{ route('users.edit',$user->id) }}">Editar</a>
+   
+                    @csrf
+                    @method('DELETE')
+      
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                </form>
+            </td>
+        </tr>
+        @endforeach
+    </table>
+  
+    {!! $users->links() !!}
+      
 @endsection
-@stop

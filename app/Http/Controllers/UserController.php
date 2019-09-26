@@ -14,8 +14,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::paginate(5);
-        return view('users.index',compact('users'));
+        $users = User::latest()->paginate(5);
+        return view('users.index',compact('users'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**
@@ -25,7 +25,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+         return view('users.create');
     }
 
     /**
@@ -35,8 +35,27 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
+
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required',
+            'password'=> 'required',
+        ]);
+  
+        User::create($request->all());
+   
+        return redirect()->route('users.index')->with('success','El usuario se creo satisfactoriamente.');
+        
+        /* $users = new User();
+ 
+        $users->name = $request->input('name');
+        $users->email = $request->input('email');
+        $users->password = bcrypt($request->input('password'));
+ 
+        $users->save();
+ 
+        return redirect()->route('users.index');*/
     }
 
     /**
@@ -45,9 +64,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    
+    public function show(User $user)
     {
-        //
+        return view('users.show',compact('users'));
     }
 
     /**
@@ -56,21 +76,31 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+
+    public function edit(User $user)
     {
-        //
+        return view('users.edit',compact('users'));
     }
 
     /**
      * Update the specified resource in storage.
-     *
+     * Nombre Aplicacion  $users en param
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  int  $id 
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+
+    public function update(Request $request, User $user)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required',
+            'password' => 'required',
+        ]);
+  
+        $user->update($request->all());
+  
+        return redirect()->route('users.index')->with('success','Usuario actualizado satisfactoriamente');
     }
 
     /**
@@ -79,8 +109,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+
+    public function destroy(User $user)
     {
-        //
+        $user->delete();
+  
+        return redirect()->route('users.index')->with('success','Usuario eliminado satisfactoriamente');
     }
 }
