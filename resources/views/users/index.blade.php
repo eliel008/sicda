@@ -7,16 +7,16 @@
 @parent
 
 @endsection
-@section('title', 'Usuarios')
+@section('title', 'Lista de Usuarios')
 @section('cabecera')
 
 <div class="col-sm-6">
-    <h1 class="m-0 text-dark">Usuarios</h1>
+    <h1 class="m-0 text-dark"></h1>
 </div><!-- /.col -->
 <div class="col-sm-6">
     <ol class="breadcrumb float-sm-right">
         <li class="breadcrumb-item"><a href="/home">Home</a></li>
-        <li class="breadcrumb-item active">localidad</li>
+        <li class="breadcrumb-item active">Usuarios Registrados</li>
     </ol>
 </div>
 
@@ -24,7 +24,7 @@
 <div class="col-lg-12">
     @if (count($errors) > 0)
     <div id="notificationError" class="alert alert-danger">
-        <strong>Ocurrió un problema con tus datos de entrada</strong><br>
+        <strong>Ocurri?? un problema con tus datos de entrada</strong><br>
         <ul>
             @foreach ($errors->all() as $error)
             <li>{{ $error }}</li>
@@ -60,53 +60,32 @@
                 <h3 class="card-title">
                     <i class="fa fa-tag"></i>
                     <!-- Title -->
+                    Lista de Usuarios Registrados
                 </h3>
             </div>
 
             <div class="card-body">
                 <!-- Body -->
-                <div class="form-group row">
-                    <div class="col-md-3">
-                        <a href="#" class="btn btn-success form-control"> add</a>
-                    </div>
-                    <div class="col-md-3">
-                        <a href="#" class="btn btn-success form-control"> add</a>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <table class="table table-bordered">
-                            <tr>
-                                <th>ID</th>
-                                <th>Nombre</th>
-                                <th>Email</th>
-                                <th width="280px">Action</th>
-                            </tr>
+            <a href="{{ route('users.create')}}" class="btn btn-primary btn-lg btn-block">Registrar un nuevo usuario</a><hr>
+                <table class="table table-striped">
+                        <thead>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Correo</th>
+                            <th>Accion</th>
+                        </thead>
+                        <tbody>
                             @foreach ($users as $user)
-                            <tr>
-                                <td>{{ ++$i }}</td>
-                                <td>{{ $user->name }}</td>
-                                <td>{{ $user->email }}</td>
-                                <td>
-                                    <a class="btn btn-info" href="{{ route('users.show',$user->id) }}">Mostrar</a>
-                                    <a class="btn btn-primary" href="{{ route('users.edit',$user->id) }}">Editar</a>
-                                    <form action="{{ route('users.destroy',$user->id) }}" method="POST">
-
-
-
-                                        @csrf
-                                        @method('DELETE')
-
-                                        <button type="submit" class="btn btn-danger">Eliminar</button>
-                                    </form>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td> {{ $user->id }} </td>
+                                    <td> {{ $user->name }} </td>
+                                    <td> {{ $user->email }} </td>
+                                    <td><a href="{{ route ('users.edit', $user->id)}}" class="btn btn-success"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span></a> <a href="" class="btn btn-warning"></a> <a href="{{ route('users.destroy', $user->id)}}" onclick="return confirm('?Se desea eliminar este usuario?')" class="btn btn-danger"><span class="glyphicon glyphicon-remove-cicle" aria-hidden="true"></span></a>
+                                </tr>
                             @endforeach
-                        </table>
-
-                    </div>
-                </div>
-                {!! $users->links() !!}
+                        </tbody>
+                      </table>
+                {!! $users->render() !!}
             </div>
         </div>
     </div>

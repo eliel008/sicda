@@ -7,61 +7,101 @@
 @parent
 
 @endsection
-@section('title', 'Guia')
+@section('title', 'Usuarios')
 @section('cabecera')
 
-@section('content')
-
-<div class="row">
-    <div class="col-lg-12 margin-tb">
-        <div class="pull-left">
-            <h2>Agrega un nuevo usuario</h2>
-        </div>
-        <div class="pull-right">
-            <a class="btn btn-primary" href="{{ route('users.index') }}"> Regresar</a>
-        </div>
-    </div>
+<div class="col-sm-6">
+    <h1 class="m-0 text-dark"></h1>
+</div><!-- /.col -->
+<div class="col-sm-6">
+    <ol class="breadcrumb float-sm-right">
+        <li class="breadcrumb-item"><a href="/home">Inicio</a></li>
+        <li class="breadcrumb-item active">Usuarios</li>
+    </ol>
 </div>
-   
-@if ($errors->any())
-    <div class="alert alert-danger">
-        <strong>Disculpe.</strong> Hubo algunos problemas con la información suministrada. <br><br>
+
+
+<div class="col-lg-12">
+    @if (count($errors) > 0)
+    <div id="notificationError" class="alert alert-danger">
+        <strong>OcurriÃ³ un problema con tus datos de entrada</strong><br>
         <ul>
             @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
+            <li>{{ $error }}</li>
             @endforeach
         </ul>
     </div>
-@endif
-   
-<form action="{{ route('users.store') }}" method="POST">
-    @csrf
-  
-     <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Usuario:</strong>
-                <input type="text" name="user" class="form-control" placeholder="Usuario">
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Correo:</strong>
-                <textarea class="form-control" style="height:150px" name="correo" placeholder="Correo"></textarea>
-            </div>
-            <div class="form-group">
-                <strong>Contraseña:</strong>
-                <input type="password" class="form-control" style="height:150px" name="contraseña" placeholder="Contraseña">
-            </div> 
-            
+    @endif
+    @if(Session::has('message.nivel'))
 
-            /** echo Form::password('password', ['class' => 'awesome']); 
-
+    <div class="alert alert-{{ session('message.nivel') }} alert-dismissible" role="alert">
+        <div class="m-alert__icon">
+            <i class="fa fa-{{ session('message.icon') }}"></i>
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                <button type="submit" class="btn btn-primary">Suministrar</button>
+        <div class="m-alert__text">
+            <strong>
+                {{ session('message.title') }}
+            </strong>
+            {{ session('message.content') }}
+        </div>
+        <div class="m-alert__close">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
         </div>
     </div>
-   
-</form>
+    @endif
+</div>
 @endsection
+@section('content')
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card card-default color-palette-box">
+
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="fa fa-tag"></i>
+                    <!-- Title -->
+                    Crea un usuario nuevo
+                </h3>
+            </div>
+
+            <div class="card-body">
+                <!-- Body -->
+                
+                {!!Form::open(['route' => 'users.store', 'method' => 'POST'])!!}
+                {{csrf_field()}}
+
+                <div class="form-group">
+                        {!!Form::label('name', 'Nombre del Usuario:') !!}
+                        {!!Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Inserte el nombre del usuario aquí', 'required'])!!}
+                </div>
+
+                <div class="form-group">
+                        {!!Form::label('email', 'Correo Electronico:') !!}
+                        {!!Form::email('email', null, ['class' => 'form-control', 'placeholder' => 'Ejemplo@gmail.com', 'required'])!!}
+                </div>
+
+                <div class="form-group">
+                        {!!Form::label('password', 'Contraseña del Usuario:') !!}
+                        {!!Form::password('password', ['class' => 'form-control', 'placeholder' => '********', 'required'])!!}
+                </div>
+                
+          
+<!--Cuando hay un Admin / User
+                <div class="form-group">
+                        {!!Form::label('type', 'Tipo de Usuario:') !!}
+                        {!!Form::select('type', ['' => 'Seleccione un nivel','usuario' => 'Usuario', 'admin' => 'Administrador'], null, ['class' => 'form-control'])!!}
+                </div>
+</div> -->
+                 <div class="form-group">
+                        {!!Form::submit('Registrar', ['class' => 'btn btn-primary'])!!}
+                </div> <a href="{{ route('users.index')}}" class="btn btn-danger">Regresar</a>
+
+            </div>
+        </div>
+    </div>
+</div>
+@section('js-inferior')
+@parent
+
+@endsection
+@stop

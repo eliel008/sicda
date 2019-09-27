@@ -7,40 +7,71 @@
 @parent
 
 @endsection
-@section('title', 'Guia')
+@section('title', 'Usuarios')
 @section('cabecera')
 
+<div class="col-sm-6">
+    <h1 class="m-0 text-dark">Crea un usuario</h1>
+</div><!-- /.col -->
+<div class="col-sm-6">
+    <ol class="breadcrumb float-sm-right">
+        <li class="breadcrumb-item"><a href="/home">Inicio</a></li>
+        <li class="breadcrumb-item active">Usuarios</li>
+    </ol>
+</div>
 
-@section('content')
-    <div class="row">
-        <div class="col-lg-12 margin-tb">
-            <div class="pull-left">
-                <h2> Mostrar Usuario</h2>
-            </div>
-            <div class="pull-right">
-                <a class="btn btn-primary" href="{{ route('users.index') }}"> Regresar</a>
-            </div>
+
+<div class="col-lg-12">
+    @if (count($errors) > 0)
+    <div id="notificationError" class="alert alert-danger">
+        <strong>OcurriÃ³ un problema con tus datos de entrada</strong><br>
+        <ul>
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
+    @if(Session::has('message.nivel'))
+
+    <div class="alert alert-{{ session('message.nivel') }} alert-dismissible" role="alert">
+        <div class="m-alert__icon">
+            <i class="fa fa-{{ session('message.icon') }}"></i>
+        </div>
+        <div class="m-alert__text">
+            <strong>
+                {{ session('message.title') }}
+            </strong>
+            {{ session('message.content') }}
+        </div>
+        <div class="m-alert__close">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
         </div>
     </div>
-   
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Usuario:</strong>
-                {{ $user->name }}
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Correo:</strong>
-                {{ $user->correo }}
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Contraseña:</strong>
-                {{ $user->password }}
-            </div>
-        </div>
-    </div>
+    @endif
+</div>
 @endsection
+@section('content')
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card card-default color-palette-box">
+
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="fa fa-tag"></i>
+                    <!-- Title -->
+                </h3>
+            </div>
+
+            <div class="card-body">
+                
+
+            </div>
+        </div>
+    </div>
+</div>
+@section('js-inferior')
+@parent
+
+@endsection
+@stop
