@@ -7,7 +7,7 @@
 @parent
 
 @endsection
-@section('title', 'Editar usuario')
+@section('title', 'Editar usuario ' . $user->name)
 @section('cabecera')
 
 <div class="col-sm-6">
@@ -60,24 +60,31 @@
                 <h3 class="card-title">
                     <i class="fa fa-tag"></i>
                     <!-- Title -->
-                    'Editar usuario: ' . $user->name
+                    Editar usuario 
+
                 </h3>
             </div>
 
-            <div class="card-body">
+            
                 <!-- Body -->
+                @if(Session::has('message'))
+                <div class="alert alert-primary" role="alert">
+                    {{ Session::get('message') }}
+                </div>
+                @endif
                 
-                {!!Form::open(['route' => ['users.update', $user], 'method' => 'PUT'])!!}
+                <div class="card-body">
+                {!!Form::open(['route' => ['users.update', $user->id], 'method' => 'PUT'])!!}
                 {{csrf_field()}}
 
                 <div class="form-group">
                         {!!Form::label('name', 'Nombre del Usuario:') !!}
-                        {!!Form::text('name', $user->name, ['class' => 'form-control', 'placeholder' => 'Inserte el nombre del usuario aquí', 'required'])!!}
+                        {!!Form::text('name', $user->name, ['class' => 'form-control', 'required'])!!}
                 </div>
 
                 <div class="form-group">
                         {!!Form::label('email', 'Correo Electronico:') !!}
-                        {!!Form::email('email', $user->email, ['class' => 'form-control', 'placeholder' => 'Ejemplo@gmail.com', 'required'])!!}
+                        {!!Form::email('email', $user->email, ['class' => 'form-control', 'required'])!!}
                 </div>
                 
           
@@ -88,7 +95,7 @@
                 </div>
 </div> -->
                  <div class="form-group">
-                        {!!Form::submit('Editar', ['class' => 'btn btn-primary'])!!}
+                        {!!Form::submit('Actualizar', ['class' => 'btn btn-primary'])!!}
                 </div> <a href="{{ route('users.index')}}" class="btn btn-danger">Regresar</a>
 
             </div>

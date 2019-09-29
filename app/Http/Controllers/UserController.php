@@ -14,9 +14,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::latest()->paginate(5); /** ordenBy('id', 'ASC');*/
+        $users = User::orderBy('id', 'ASC')->paginate(5);/**;latest()-; */
         return view('users.index',compact('users'))->with('i', (request()->input('page', 1) - 1) * 5);
-    }                            /** with('$users')*/
+    }                           
 
     /**
      * Show the form for creating a new resource.
@@ -45,38 +45,9 @@ class UserController extends Controller
  
         $users->save();
  
-        return redirect()->route('users.index');
+        return redirect()->route('users.index')->with('message', 'El usuario ha sido creado correctamente.');
 
     }
-
-       /* return redirect()->route('users');
-
-*---
-
-$users->save();
- 
-        return redirect()->route('users.index');
-        
-        $user = new User($request=>all());
-        $user => password = $request=>password;
-        $user => save();
-
-        *---
-  
-        User::create($request->all());
-   
-        return redirect()->route('users.index')->with('success','El usuario se creo satisfactoriamente.');
-        
-         $users = new User();
- 
-        $users->name = $request->input('name');
-        $users->email = $request->input('email');
-        $users->password = bcrypt($request->input('password'));
- 
-        $users->save();
- 
-        return redirect()->route('users.index');*/
-    
 
     /** 
      * Display the specified resource.
@@ -85,10 +56,9 @@ $users->save();
      * @return \Illuminate\Http\Response
      */
     
-    public function show(User $user)
+    public function show($id)
     {
-        dd($id); //*return view('users.show',compact('users')); *
- 
+        return view('users.show');
     }
 
     /**
@@ -98,10 +68,10 @@ $users->save();
      * @return \Illuminate\Http\Response
      */
 
-    public function edit(User $user)
+    public function edit($id)
     {
         $user = User::find($id);
-        return view('users.edit')->with('users', $user);
+        return view('users.edit',compact('user'));
     }
 
     /**
@@ -115,13 +85,11 @@ $users->save();
     public function update(Request $request, $id)
     {
         $user = User::find($id);
-        $user ->name = $request->name;
-        $user ->name = $request->email;
-        $user ->save();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->save();
+        return redirect('users')->with('message', 'El usuario ha sido actualizado correctamente.');
 
-        Flash::warning('El usuario ' . $user->name . ' ha sido actualizado satisfactoriamente');
-  
-        return redirect()->route('users.index');
     }
 
     /**
@@ -136,8 +104,6 @@ $users->save();
         $user = User::find($id);
         $user->delete();
 
-        Flash::error('El usuario ' . $user->name . 'ha sido eliminado de forma exitosa');
-
-        return redirect()->route('users.index');
+        return redirect('users')->with('message', 'El usuario ha sido eliminado de forma exitosa');
     }
 }

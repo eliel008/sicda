@@ -34,7 +34,27 @@ Route::get('users/{id}/edit', [
     'as' => 'users.edit'
     ]);
 
+Route::get('users/{id}', [
+    'uses' =>   'UserController@show',
+    'as' => 'users.show'
+    ]);
+
+Route::get('users/{user}', [
+     'uses' =>   'UserController@update',
+     'as' => 'users.update'
+    ]);
+
 Route::get('users/{id}/destroy', [
     'uses' =>   'UserController@destroy',
     'as' => 'users.destroy'
 ]);
+
+
+/*
+Auth::routes();
+Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/users/index', 'UserController@index')->name('users.index');
+Route::post('/users/create', 'UserController@create')->name('users.create');
+Route::put('/users/{id}/update', 'UserController@update')->name('users.update');
+Route::delete('/users/{id}/destroy', 'UserController@destroy')->name('home');
+Route::get('/home', 'HomeController@index')->name('home');

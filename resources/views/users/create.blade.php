@@ -64,9 +64,16 @@
                 </h3>
             </div>
 
-            <div class="card-body">
+            
                 <!-- Body -->
-                
+
+                @if(Session::has('message'))
+    <div class="alert alert-primary" role="alert">
+        {{ Session::get('message') }}
+    </div>
+                @endif
+
+                <div class="card-body">
                 {!!Form::open(['route' => 'users.store', 'method' => 'POST'])!!}
                 {{csrf_field()}}
 
@@ -93,7 +100,7 @@
                 </div>
 </div> -->
                  <div class="form-group">
-                        {!!Form::submit('Registrar', ['class' => 'btn btn-primary'])!!}
+                        {!!Form::submit('Registrar', ['class' => 'btn btn-default'])!!}
                 </div> <a href="{{ route('users.index')}}" class="btn btn-danger">Regresar</a>
 
             </div>

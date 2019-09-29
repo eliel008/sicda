@@ -2,6 +2,7 @@
 @section('css')
 @parent
 
+
 @endsection
 @section('js-superior')
 @parent
@@ -64,10 +65,17 @@
                 </h3>
             </div>
 
-            <div class="card-body">
                 <!-- Body -->
+                
+            @if(Session::has('message'))
+            <div class="alert alert-primary" role="alert">
+                {{ Session::get('message') }}
+            </div>
+            @endif
+            
+            <div class="card-body"> 
             <a href="{{ route('users.create')}}" class="btn btn-primary btn-lg btn-block">Registrar un nuevo usuario</a><hr>
-                <table class="table table-striped">
+            <table class="table table-striped">
                         <thead>
                             <th>ID</th>
                             <th>Nombre</th>
@@ -80,8 +88,8 @@
                                     <td> {{ $user->id }} </td>
                                     <td> {{ $user->name }} </td>
                                     <td> {{ $user->email }} </td>
-                                    <td><a href="{{ route ('users.edit', $user->id)}}" class="btn btn-success"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span></a> <a href="" class="btn btn-warning"></a> <a href="{{ route('users.destroy', $user->id)}}" onclick="return confirm('?Se desea eliminar este usuario?')" class="btn btn-danger"><span class="glyphicon glyphicon-remove-cicle" aria-hidden="true"></span></a>
-                                </tr>
+                                <td><a href="{{ route ('users.edit', $user->id)}}" class="btn btn-success"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>Editar</a> <a href="{{ route ('users.show', $user->id)}}" class="btn btn-primary pull-right" data-toggle="modal" data-target="#mostrarUsuario{{$user->id}}">Mostrar</a> <a href="{{ route('users.destroy', $user->id)}}" onclick="return confirm('¿Desea eliminar este usuario?')" class="btn btn-danger"><span class="glyphicon glyphicon-remove-cicle" aria-hidden="true"></span>Eliminar</a>
+                                 </tr>
                             @endforeach
                         </tbody>
                       </table>
@@ -90,6 +98,7 @@
         </div>
     </div>
 </div>
+
 @section('js-inferior')
 @parent
 
