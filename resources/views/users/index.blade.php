@@ -73,8 +73,10 @@
             </div>
             @endif
             
+            @role('admin')
             <div class="card-body"> 
-            <a href="{{ route('users.create')}}" class="btn btn-primary btn-lg btn-block">Registrar un nuevo usuario</a><hr>
+            <a href="{{ route('users.create')}}" class="btn btn-primary">Registrar un nuevo usuario</a><hr>
+            @endrole
             <table class="table table-striped">
                         <thead>
                             <th>ID</th>
@@ -88,12 +90,18 @@
                                     <td> {{ $user->id }} </td>
                                     <td> {{ $user->name }} </td>
                                     <td> {{ $user->email }} </td>
-                                <td><a href="{{ route ('users.edit', $user->id)}}" class="btn btn-success"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>Editar</a> <a href="{{ route ('users.show', $user->id)}}" class="btn btn-primary pull-right" data-toggle="modal" data-target="#mostrarUsuario{{$user->id}}">Mostrar</a> <a href="{{ route('users.destroy', $user->id)}}" onclick="return confirm('¿Desea eliminar este usuario?')" class="btn btn-danger"><span class="glyphicon glyphicon-remove-cicle" aria-hidden="true"></span>Eliminar</a>
-                                 </tr>
+                                <td>
+                                    @role('coordinador|admin')
+                                    <a href="{{ route ('users.edit', $user->id)}}" class="btn btn-success"><i class="fas fa-edit"></i></a> 
+                                    @endrole
+                                    @role('admin')
+                                    <a href="{{ route('users.destroy', $user->id)}}" onclick="return confirm('¿Desea eliminar a este usuario?')" class="btn btn-danger"><i class="fas fa-trash-alt"></i>
+                                    @endrole
+                                </tr>
                             @endforeach
                         </tbody>
                       </table>
-                {!! $users->render() !!}
+                {!! $users->render() !!}    
             </div>
         </div>
     </div>

@@ -77,21 +77,35 @@
                 {!!Form::open(['route' => 'users.store', 'method' => 'POST'])!!}
                 {{csrf_field()}}
 
+                <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
-                        {!!Form::label('name', 'Nombre del Usuario:') !!}
+                        {!!Form::label('name', 'Nombre:') !!}
                         {!!Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Inserte el nombre del usuario aquí', 'required'])!!}
                 </div>
+                </div>
 
+                <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                         {!!Form::label('email', 'Correo Electronico:') !!}
                         {!!Form::email('email', null, ['class' => 'form-control', 'placeholder' => 'Ejemplo@gmail.com', 'required'])!!}
                 </div>
-
-                <div class="form-group">
-                        {!!Form::label('password', 'Contraseña del Usuario:') !!}
-                        {!!Form::password('password', ['class' => 'form-control', 'placeholder' => '********', 'required'])!!}
                 </div>
-                
+
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                        <span class="input-group-addon"><i class="fa fa-key"></i>
+                        {!!Form::label('password', 'Contraseña:') !!}
+                        {!!Form::password('password', ['class' => 'form-control', 'placeholder' => '********', 'required|min:8|confirmed'])!!}
+                </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                        <span class="input-group-addon"><i class="fa fa-key"></i>
+                        {!!Form::label('confirm-password', 'Confirmar Contraseña:') !!}
+                        {!!Form::password('confirm-password', ['class' => 'form-control', 'placeholder' => '********',  'required'])!!}
+                </div>
+                </div>
           
 <!--Cuando hay un Admin / User
                 <div class="form-group">
@@ -99,9 +113,15 @@
                         {!!Form::select('type', ['' => 'Seleccione un nivel','usuario' => 'Usuario', 'admin' => 'Administrador'], null, ['class' => 'form-control'])!!}
                 </div>
 </div> -->
-                 <div class="form-group">
-                        {!!Form::submit('Registrar', ['class' => 'btn btn-default'])!!}
-                </div> <a href="{{ route('users.index')}}" class="btn btn-danger">Regresar</a>
+
+                <div class="form-group row">
+                        <div class="col-md-1 offset-md-5">
+                            {!!Form::submit('Registrar', ['class' => 'btn btn-primary'])!!}
+                        </div>
+                        <div class="col-md-1">
+                            <a href="{{ route('users.index')}}" class="btn btn-danger">Regresar</a>
+                        </div>
+                      </div>
 
             </div>
         </div>

@@ -74,33 +74,30 @@
                 @endif
                 
                 <div class="card-body">
-                {!!Form::open(['route' => ['users.update', $user->id], 'method' => 'PUT'])!!}
-                {{csrf_field()}}
+                    {!!Form::open(['route' => ['users.update', $user->id], 'method' => 'PUT'])!!}
+                    {{csrf_field()}}
 
                 <div class="form-group">
-                        {!!Form::label('name', 'Nombre del Usuario:') !!}
-                        {!!Form::text('name', $user->name, ['class' => 'form-control', 'required'])!!}
-                </div>
 
-                <div class="form-group">
-                        {!!Form::label('email', 'Correo Electronico:') !!}
-                        {!!Form::email('email', $user->email, ['class' => 'form-control', 'required'])!!}
-                </div>
-                
-          
-<!--Cuando hay un Admin / User
-                <div class="form-group">
-                        {!!Form::label('type', 'Tipo de Usuario:') !!}
-                        {!!Form::select('type', ['' => 'Seleccione un nivel','usuario' => 'Usuario', 'admin' => 'Administrador'], null, ['class' => 'form-control'])!!}
-                </div>
-</div> -->
-                 <div class="form-group">
-                        {!!Form::submit('Actualizar', ['class' => 'btn btn-primary'])!!}
-                </div> <a href="{{ route('users.index')}}" class="btn btn-danger">Regresar</a>
+                    {!!Form::label('name', 'Nombre del Usuario:') !!}
+                    {!!Form::text('name', $user->name, ['class' => 'form-control', 'required'])!!}
 
-            </div>
-        </div>
-    </div>
+                    {!!Form::label('email', 'Correo Electronico:') !!}
+                    {!!Form::email('email', $user->email, ['class' => 'form-control', 'required'])!!}
+
+                    <br>
+                  <div class="form-group row">
+                        <div class="col-md-1 offset-md-5">
+                        {!!Form::submit('Actualizar', ['class' => 'form-control btn btn-primary'])!!}
+                    </div>
+                    <div class="col-md-1">
+                        <a href="{{ route('users.index')}}" class="form-control btn btn-danger">Regresar</a>
+                    </div>
+                  </div>
+                 </div>
+                 </div>
+         </div>
+     </div>
 </div>
 @section('js-inferior')
 @parent
