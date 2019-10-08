@@ -56,7 +56,6 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="card card-default color-palette-box">
-
             <div class="card-header">
                 <h3 class="card-title">
                     <i class="fa fa-tag"></i>
@@ -66,42 +65,48 @@
             </div>
 
                 <!-- Body -->
-                
+
             @if(Session::has('message'))
             <div class="alert alert-primary" role="alert">
                 {{ Session::get('message') }}
             </div>
             @endif
-            
-            @role('admin')
-            <div class="card-body"> 
-            <a href="{{ route('users.create')}}" class="btn btn-primary">Registrar un nuevo usuario</a><hr>
+            <div class="card-body">
+                @role('coordinator|super-admin')
+                <div class="row justify-content-end">
+                    <a href="{{ route('users.create')}}" class="btn btn-primary">Registrar un nuevo usuario</a>
+            </div>
             @endrole
+            <br>
             <table class="table table-striped">
-                        <thead>
-                            <th>ID</th>
-                            <th>Nombre</th>
-                            <th>Correo</th>
-                            <th>Accion</th>
-                        </thead>
-                        <tbody>
-                            @foreach ($users as $user)
-                                <tr>
-                                    <td> {{ $user->id }} </td>
-                                    <td> {{ $user->name }} </td>
-                                    <td> {{ $user->email }} </td>
-                                <td>
-                                    @role('coordinador|admin')
-                                    <a href="{{ route ('users.edit', $user->id)}}" class="btn btn-success"><i class="fas fa-edit"></i></a> 
-                                    @endrole
-                                    @role('admin')
-                                    <a href="{{ route('users.destroy', $user->id)}}" onclick="return confirm('¿Desea eliminar a este usuario?')" class="btn btn-danger"><i class="fas fa-trash-alt"></i>
-                                    @endrole
-                                </tr>
-                            @endforeach
-                        </tbody>
-                      </table>
-                {!! $users->render() !!}    
+                <thead>
+                    <th>id</th>
+                    <th>Nombre</th>
+                    <th>Correo</th>
+                    <th>Rol</th>
+                    <th width="170px" class="text-center">Acciones</th>
+                </thead>
+                <tbody>
+                    @foreach ($users as $user)
+                        <tr>
+                            <td> {{ $user->id }} </td>
+                            <td> {{ $user->name }} </td>
+                            <td> {{ $user->email }} </td>
+                            <td>{{ $user->roles->implode('name', ',') }}</td>
+                            <td>
+                                <a href="{{ route ('users.show', $user->id)}}" class="btn btn-info" title="Ver"><i class="fas fa-eye"></i></a>
+                                @role('coordinator|super-admin')
+                                <a href="{{ route ('users.edit', $user->id)}}" class="btn btn-success" title="Editar"><i class="fas fa-edit"></i></a>
+                                @endrole
+                                @role('super-admin')
+                                <a href="{{ route('users.destroy', $user->id)}}" onclick="return confirm('¿Desea eliminar a este usuario?')" class="btn btn-danger" title="Eliminar"><i class="fas fa-trash-alt"></i></a>
+                                @endrole
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+                {!! $users->render() !!}
             </div>
         </div>
     </div>

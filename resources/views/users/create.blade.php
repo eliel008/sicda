@@ -24,7 +24,7 @@
 <div class="col-lg-12">
     @if (count($errors) > 0)
     <div id="notificationError" class="alert alert-danger">
-        <strong>OcurriÃ³ un problema con tus datos de entrada</strong><br>
+        <strong>Ocurrió un problema con tus datos de entrada</strong><br>
         <ul>
             @foreach ($errors->all() as $error)
             <li>{{ $error }}</li>
@@ -52,8 +52,8 @@
 </div>
 @endsection
 @section('content')
-<div class="row">
-    <div class="col-lg-12">
+<div class="row justify-content-center">
+    <div class="col-md-8">
         <div class="card card-default color-palette-box">
 
             <div class="card-header">
@@ -64,7 +64,7 @@
                 </h3>
             </div>
 
-            
+
                 <!-- Body -->
 
                 @if(Session::has('message'))
@@ -100,25 +100,33 @@
                 </div>
 
                 <div class="col-xs-12 col-sm-12 col-md-12">
-                <div class="form-group">
+                    <div class="form-group">
                         <span class="input-group-addon"><i class="fa fa-key"></i>
                         {!!Form::label('confirm-password', 'Confirmar Contraseña:') !!}
                         {!!Form::password('confirm-password', ['class' => 'form-control', 'placeholder' => '********',  'required'])!!}
+                    </div>
                 </div>
-                </div>
-          
-<!--Cuando hay un Admin / User
-                <div class="form-group">
-                        {!!Form::label('type', 'Tipo de Usuario:') !!}
-                        {!!Form::select('type', ['' => 'Seleccione un nivel','usuario' => 'Usuario', 'admin' => 'Administrador'], null, ['class' => 'form-control'])!!}
-                </div>
-</div> -->
 
-                <div class="form-group row">
-                        <div class="col-md-1 offset-md-5">
+<!--Cuando hay un Admin / User-->
+                {{--<div class="form-group">
+                        {!!Form::label('type', 'Tipo de Usuario:') !!}
+                        {!!Form::select('type', ['' => 'Seleccione un nivel','user' => 'Usuario', 'super-admin' => 'Administrador', 'coordinator' => 'Coordinador' ], null, ['class' => 'form-control'])!!}
+                </div>--}}
+                <div class="form-group">
+                    <label form="rol">Tipo de usuario</label>
+                    <select class="form-control" name="rol">
+                        @foreach ($roles as $key => $value)
+                            <option value="{{ $value }}">{{ $value }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+
+                <div class="form-group row justify-content-center">
+                        <div>
                             {!!Form::submit('Registrar', ['class' => 'btn btn-primary'])!!}
-                        </div>
-                        <div class="col-md-1">
+                        </div>&nbsp;&nbsp;&nbsp;
+                        <div>
                             <a href="{{ route('users.index')}}" class="btn btn-danger">Regresar</a>
                         </div>
                       </div>

@@ -24,7 +24,7 @@
 <div class="col-lg-12">
     @if (count($errors) > 0)
     <div id="notificationError" class="alert alert-danger">
-        <strong>Ocurri?? un problema con tus datos de entrada</strong><br>
+        <strong>Ocurrio un problema con tus datos de entrada</strong><br>
         <ul>
             @foreach ($errors->all() as $error)
             <li>{{ $error }}</li>
@@ -52,50 +52,60 @@
 </div>
 @endsection
 @section('content')
-<div class="row">
-    <div class="col-lg-12">
+<div class="row justify-content-center">
+    <div class="col-md-8">
         <div class="card card-default color-palette-box">
 
             <div class="card-header">
                 <h3 class="card-title">
                     <i class="fa fa-tag"></i>
                     <!-- Title -->
-                    Editar usuario 
+                    Editar usuario
 
                 </h3>
             </div>
 
-            
+
                 <!-- Body -->
                 @if(Session::has('message'))
                 <div class="alert alert-primary" role="alert">
                     {{ Session::get('message') }}
                 </div>
                 @endif
-                
+
                 <div class="card-body">
                     {!!Form::open(['route' => ['users.update', $user->id], 'method' => 'PUT'])!!}
                     {{csrf_field()}}
 
                 <div class="form-group">
-
                     {!!Form::label('name', 'Nombre del Usuario:') !!}
                     {!!Form::text('name', $user->name, ['class' => 'form-control', 'required'])!!}
 
                     {!!Form::label('email', 'Correo Electronico:') !!}
                     {!!Form::email('email', $user->email, ['class' => 'form-control', 'required'])!!}
-
+                    <div class="form-group">
+                        <label form="rol">Tipo de usuario</label>
+                            <select class="form-control" name="rol">
+                                @foreach ($roles as $key => $value)
+                                    @if($user->hasRole($value))
+                                        <option value="{{ $value }}" selected>{{ $value }}</option>
+                                        @else
+                                        <option value="{{ $value }}">{{ $value }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                    </div>
                     <br>
-                  <div class="form-group row">
-                        <div class="col-md-1 offset-md-5">
-                        {!!Form::submit('Actualizar', ['class' => 'form-control btn btn-primary'])!!}
+                    <div class="form-group row justify-content-center">
+                        <div>
+                            {!!Form::submit('Actualizar', ['class' => 'form-control btn btn-primary'])!!}
+                        </div>&nbsp;&nbsp;&nbsp;
+                        <div>
+                            <a href="{{ route('users.index')}}" class="form-control btn btn-danger">Regresar</a>
+                        </div>
                     </div>
-                    <div class="col-md-1">
-                        <a href="{{ route('users.index')}}" class="form-control btn btn-danger">Regresar</a>
-                    </div>
-                  </div>
-                 </div>
-                 </div>
+                </div>
+            </div>
          </div>
      </div>
 </div>
