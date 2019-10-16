@@ -26,15 +26,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        //$role = Role::create(['name'=>'admin']);
-        //$role = Role::create(['name'=>'coordinador']);
-        //$role = Role::create(['name'=>'usuario']);
-        //$permission = Permission::create(['name'=> 'edit users']);
-        //$permission = Permission::create(['name'=> 'create users']);
-        //$permission = Permission::create(['name'=> 'delete users']);
-        //auth()->user()->givePermissionTo('edit users');
-        //auth()->user()->assignRole('admin');
-
         $user = Auth::user();
         $rol = $user->roles->implode('name', ',');
         return view('home', compact('rol'));
